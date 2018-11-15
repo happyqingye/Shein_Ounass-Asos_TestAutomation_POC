@@ -126,10 +126,16 @@ public class SheinPageObject {
 		else return false;
 	}
 	
-	void login(int i) {
+	boolean login(int i) {
 		List<WebElement> elements = new ArrayList<WebElement>();
 		elements = Actions.driver.findElements(By.cssSelector(loginBtnLocator));
 		elements.get(i).click();
+		if(actions.waitUntil(By.cssSelector(loginBtnLocator), presenceOfElement)==null) {
+			if(actions.waitUntil(By.cssSelector(accountSettingsLocator), presenceOfElement)!=null) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	void goToAccountSettings() {

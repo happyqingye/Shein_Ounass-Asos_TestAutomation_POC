@@ -38,7 +38,7 @@ public class Actions {
 		System.setProperty("webdriver.chrome.driver", chromeDriverPath);
 		Actions.driver = new ChromeDriver();
 		Actions.driver.manage().window().maximize();
-		Actions.driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		Actions.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
 	public void takeScreenShot(String name) {
@@ -92,11 +92,11 @@ public class Actions {
 			switch (condition) {
 
 			case "presenceOfElement":
-				element = (new WebDriverWait(driver,10)).until(ExpectedConditions.presenceOfElementLocated(b));
+				element = (new WebDriverWait(driver,6)).until(ExpectedConditions.presenceOfElementLocated(b));
 				return element;
 
 			case "elementToBeClickable":
-				element = (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(b));
+				element = (new WebDriverWait(driver, 6)).until(ExpectedConditions.elementToBeClickable(b));
 				return element;
 				
 
