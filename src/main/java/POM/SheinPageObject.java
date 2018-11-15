@@ -4,14 +4,16 @@ import static org.junit.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.security.auth.callback.ConfirmationCallback;
-
-import org.apache.commons.math3.ml.neuralnet.UpdateAction;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 
 import junit.framework.Assert;
@@ -47,20 +49,29 @@ public class SheinPageObject {
 		handleCookies();
 	}
 	
-	public void createAccount(String email,String pass) {
+	public boolean createAccount(String email,String pass) {
 		goToSignIn_SignUp();
 		setEmail(signUp_Index,email);
 		setPassword(signUp_Index,pass);
 		setConfirmPassword(signUp_Index, pass);
-		register(0);
+		if(register(0))return true;
+		else {
+			actions.takeScreenShot("SignUp Error");
+			return false;
+		}
 	}
 	
-	public void signIn(String email,String pass) {
+	public boolean signIn(String email,String pass) {
 		goToSignIn_SignUp();
 		setEmail(login_index,email);
 		setPassword(login_index,pass);
 		login(login_index);
-		assertNotNull(actions.waitUntil(By.cssSelector(accountSettingsLocator), presenceOfElement));
+		if(actions.waitUntil(By.cssSelector(accountSettingsLocator), presenceOfElement)==null) {
+			actions.takeScreenShot("SignIn Error");
+			return false ;
+		}
+		return true;
+		
 	}
 	
 	public void EditAndVerifyAccountSettings(String email,String phone,
@@ -105,10 +116,14 @@ public class SheinPageObject {
 		actions.setText(By.cssSelector(signUpConfirmPasswordTextFieldLocator), pass);
 	}
 	
-	void register(int i) {
+	boolean register(int i) {
 		List<WebElement> elements = new ArrayList<WebElement>();
 		elements = Actions.driver.findElements(By.cssSelector(registerBtnLocator));
 		elements.get(i).click();
+		if(actions.waitUntil(By.cssSelector(registerBtnLocator), presenceOfElement)==null) {
+			return true;
+		}
+		else return false;
 	}
 	
 	void login(int i) {

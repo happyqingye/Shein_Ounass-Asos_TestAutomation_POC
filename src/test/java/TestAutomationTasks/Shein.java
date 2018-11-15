@@ -1,5 +1,7 @@
 package TestAutomationTasks;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileReader;
@@ -20,6 +22,11 @@ public class Shein {
     
     @BeforeClass
     public static void setUp() throws Exception {
+    	File screenShote = new File("ScreenShots");
+    	File[] listFiles = screenShote.listFiles();
+		for(File file : listFiles){
+			file.delete();
+		}
     	properties.load(new FileReader(new File("test.properties")));
         actions.initiateTheWebDriver(properties.getProperty("chromeDriverPath"));
     }
@@ -35,13 +42,13 @@ public class Shein {
     public void sheinHappyScenario() throws InterruptedException {
     	shein.navigateToHomePage(properties.getProperty("sheinWebsite"));
     	if(properties.getProperty("newClient")=="true") {
-    		shein.createAccount(
-    	    		properties.getProperty("email"),properties.getProperty("pass"));
+    		assertTrue(shein.createAccount(
+    	    		properties.getProperty("email"),properties.getProperty("pass")),"Sign Up Error");
     		properties.setProperty("newClient", "false");
     	}
     	else {
-    		shein.signIn(
-    	    		properties.getProperty("email"),properties.getProperty("pass"));		
+    		assertTrue(shein.signIn(
+    	    		properties.getProperty("email"),properties.getProperty("pass")),"SignIn Error");		
     	}
     	
     	String [] items = {properties.getProperty("firstItemLink"),
@@ -65,5 +72,21 @@ public class Shein {
     	
     	sheinGoods.verifyBag(items);
     	
+    }
+    
+    @Test
+    public void invalidSignUp(){
+    	shein.navigateToHomePage(properties.getProperty("sheinWebsite"));
+    	assertFalse(shein.createAccount(properties.getProperty("email")
+    			,properties.getProperty("wrongPass")),"SignUp Error");
+    	
+	    
+    }
+    @Test 
+    public void invalidSignIn(){
+    	shein.navigateToHomePage(properties.getProperty("sheinWebsite"));
+    	assertFalse(shein.signIn(
+	    		properties.getProperty("email"),properties.getProperty("wrongPass")),"SignIn Error");		
+
     }
 }

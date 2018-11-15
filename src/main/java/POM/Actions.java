@@ -3,14 +3,19 @@ package POM;
 import static org.junit.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -36,6 +41,18 @@ public class Actions {
 		Actions.driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 	}
 
+	public void takeScreenShot(String name) {
+		File src= ((TakesScreenshot)Actions.driver).getScreenshotAs(OutputType.FILE);
+		try {
+		  FileUtils.copyFile(src, new File("ScreenShots\\"+name+".png"));
+		}
+		catch (IOException e)
+		 {
+		  System.out.println(e.getMessage());
+		  
+		 }
+
+	}
 	public void setText(By b, String text) {
 		waitUntil(b, "presenceOfElement");
 		//System.out.println(element);
@@ -75,11 +92,11 @@ public class Actions {
 			switch (condition) {
 
 			case "presenceOfElement":
-				element = (new WebDriverWait(driver,30)).until(ExpectedConditions.presenceOfElementLocated(b));
+				element = (new WebDriverWait(driver,10)).until(ExpectedConditions.presenceOfElementLocated(b));
 				return element;
 
 			case "elementToBeClickable":
-				element = (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(b));
+				element = (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(b));
 				return element;
 				
 
@@ -89,7 +106,7 @@ public class Actions {
 			}
 		return element ;
 		} catch (Exception e) {
-			Assert.fail("Couldn't find the element because of " + e.getMessage());
+			//Assert.fail("Couldn't find the element because of " + e.getMessage());
 			return null;
 		}
 	}
