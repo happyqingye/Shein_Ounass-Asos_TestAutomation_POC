@@ -2,7 +2,8 @@
 
 
 #To Run the project using CMD :
-- Go to test.properties and update chromedriver path with your own chrome driver path
+- install gradle using CMD command "brew install gradle" 
+- Go to test.properties in the project directory and update chromedriver path with your own chrome driver path
 - Navigate to the main directory which contains gradlew.bat and open cmd then type "gradlew clean test"
 
 #To run using jenkins :
