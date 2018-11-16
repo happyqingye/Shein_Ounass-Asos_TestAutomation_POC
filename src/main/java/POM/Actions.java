@@ -37,7 +37,10 @@ public class Actions {
 	public void initiateTheWebDriver(String chromeDriverPath) throws MalformedURLException {
 		System.setProperty("webdriver.chrome.driver", chromeDriverPath);
 		Actions.driver = new ChromeDriver();
-		Actions.driver.manage().window().maximize();
+// 		try{
+// 			Actions.driver.manage().window().maximize();
+// 		}
+// 		catch(Exception e){}
 		Actions.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
