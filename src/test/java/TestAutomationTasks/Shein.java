@@ -31,7 +31,7 @@ public class Shein {
 
 		}
 		properties.load(new FileReader(new File("test.properties")));
-		actions.initiateTheWebDriver(properties.getProperty("chromeDriverPath"));
+		actions.initiateTheWebDriver();
 	}
 
 	@AfterSuite

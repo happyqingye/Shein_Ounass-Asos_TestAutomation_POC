@@ -10,6 +10,8 @@ dependencies {
     //compile 'junit:junit:4.12'
     compile 'org.seleniumhq.selenium:selenium-server-standalone:2.53.0'
     compile group: 'org.testng', name: 'testng', version: '6.9.10'
+    compile group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '2.2.5'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '2.50.0'
     
 }
 
@@ -17,7 +19,7 @@ test {
     useTestNG(){
        useDefaultListeners = true
        suites 'tests.xml'
-    }
+    }	
     
 }
 

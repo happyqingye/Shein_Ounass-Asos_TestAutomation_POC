@@ -25,6 +25,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import io.github.bonigarcia.wdm.ChromeDriverManager;
+
 public class Actions {
 
 	public static ArrayList<WebDriver> allDrivers;
@@ -34,8 +36,9 @@ public class Actions {
 		
 	}
 	
-	public void initiateTheWebDriver(String chromeDriverPath) throws MalformedURLException {
-		System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+	public void initiateTheWebDriver() {
+		//System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+		ChromeDriverManager.getInstance().setup();
 		Actions.driver = new ChromeDriver();
 		Actions.driver.manage().window().maximize();
 		Actions.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
