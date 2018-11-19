@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Shein">
+<suite guice-stage="DEVELOPMENT" name="Shein" thread-count="10" parallel="classes">
   <test thread-count="5" verbose="2" name="Shein">
     <classes>
       <class name="TestAutomationTasks.Shein"/>
+      <class name="TestAutomationTasks.Shein2"/>
     </classes>
   </test> <!-- Default test -->
 </suite> <!-- Default suite -->
