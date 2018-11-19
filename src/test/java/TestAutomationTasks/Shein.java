@@ -2,16 +2,18 @@ package TestAutomationTasks;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.Properties;
 
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
-import POM.*;
+import POM.Actions;
+import POM.SheinGoods;
+import POM.SheinPageObject;
 
 public class Shein {
 	static Actions actions = new Actions();
