@@ -49,7 +49,7 @@ public class Shein {
 
 	}
 
-	//@Test(priority=2)
+	@Test(priority=2)
 	public void invalidSignIn() {
 		shein.navigateToHomePage(properties.getProperty("sheinWebsite"));
 		assertFalse(shein.signIn(properties.getProperty("email"), properties.getProperty("wrongPass")), "SignIn Error");
