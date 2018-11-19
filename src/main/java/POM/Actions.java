@@ -29,7 +29,7 @@ import io.github.bonigarcia.wdm.ChromeDriverManager;
 public class Actions {
 
 	public static ArrayList<WebDriver> allDrivers;
-	public static RemoteWebDriver driver;
+	public WebDriver driver;
 	
 	public void initiateMultipleWebDrivers(int numbers,String [] paths) {
 		
@@ -37,19 +37,19 @@ public class Actions {
 	
 	public void initiateTheWebDriver() throws MalformedURLException {
 		//System.setProperty("webdriver.chrome.driver", chromeDriverPath);
-		//ChromeDriverManager.getInstance().setup();
-		//Actions.driver = new ChromeDriver();
-		DesiredCapabilities cap = DesiredCapabilities.chrome();
-		cap.setPlatform(Platform.LINUX);
-		cap.setVersion("");
-		Actions.driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),cap);
-		
-		Actions.driver.manage().window().maximize();
-		Actions.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		ChromeDriverManager.getInstance().setup();
+		driver = new ChromeDriver();
+//		DesiredCapabilities cap = DesiredCapabilities.chrome();
+//		cap.setPlatform(Platform.LINUX);
+//		cap.setVersion("");
+//		driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),cap);
+//		
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
 	public void takeScreenShot(String name) {
-		File src= ((TakesScreenshot)Actions.driver).getScreenshotAs(OutputType.FILE);
+		File src= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		try {
 		  FileUtils.copyFile(src, new File("ScreenShots\\"+name+".png"));
 		}
@@ -64,9 +64,9 @@ public class Actions {
 		waitUntil(b, "presenceOfElement");
 		//System.out.println(element);
 		try {
-			Actions.driver.findElement(b).clear();
-			Actions.driver.findElement(b).sendKeys(text);
-			String actualValue = ( Actions.driver.findElement(b).getAttribute("value")==null) ? Actions.driver.findElement(b).getAttribute("innerHTML") : Actions.driver.findElement(b).getAttribute("value");
+			driver.findElement(b).clear();
+			driver.findElement(b).sendKeys(text);
+			String actualValue = ( driver.findElement(b).getAttribute("value")==null) ? driver.findElement(b).getAttribute("innerHTML") : driver.findElement(b).getAttribute("value");
 			
 			assertEquals(actualValue,text );
 		} catch (Exception e) {
@@ -78,7 +78,7 @@ public class Actions {
 	public void clickOn(By b) {
 		waitUntil(b, "elementToBeClickable");
 		try {
-			Actions.driver.findElement(b).click();
+			driver.findElement(b).click();
 			Thread.sleep(1000);
 		} catch (Exception e) {
 			Assert.fail("Couldn't click because of" + e.getMessage());
@@ -87,7 +87,7 @@ public class Actions {
 	}
 
 	public void navigateToPage(String url,By b) {
-		Actions.driver.get(url);
+		driver.get(url);
 		WebElement element = waitUntil(b, "presenceOfElement");
 		assertNotNull(element, "Navigation Failed to this Website "+url);
 	}
@@ -120,7 +120,7 @@ public class Actions {
 
 	public void closeTheBrowser() {
 		try {
-			Actions.driver.quit();
+			driver.quit();
 		} catch (Exception e) {
 			Assert.fail("Couldn't close the browser because of " + e.getMessage());
 		}

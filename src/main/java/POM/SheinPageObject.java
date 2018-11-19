@@ -13,7 +13,11 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 public class SheinPageObject {
-	Actions actions = new Actions();
+	public Actions actions ;
+	
+	public SheinPageObject(Actions actions){
+		this.actions = actions;
+	}
 	int login_index = 0, signUp_Index=1,phone_index=2;
 	String homePageLoadedLocator = ".first-cate-ctn" , //css Selector
 		   coockiesAcceptBtnLocator = ".accept-btn",
@@ -81,7 +85,7 @@ public class SheinPageObject {
 	
 	void handleCookies() {
 		try {
-			if(Actions.driver.findElement(By.cssSelector(coockiesAcceptBtnLocator)).isDisplayed() ) {
+			if(actions.driver.findElement(By.cssSelector(coockiesAcceptBtnLocator)).isDisplayed() ) {
 				actions.clickOn(By.cssSelector(coockiesAcceptBtnLocator));
 		}}
 		catch(Exception e) {}
@@ -94,14 +98,14 @@ public class SheinPageObject {
 	
 	void setEmail(int i,String email) {
 		List<WebElement> elements = new ArrayList<WebElement>();
-		elements = Actions.driver.findElements(By.cssSelector(signUpEmailTextFieldLocator));
+		elements = actions.driver.findElements(By.cssSelector(signUpEmailTextFieldLocator));
 		elements.get(i).sendKeys(email);
 		assertTrue(elements.get(i).getAttribute("value").toString().contains(email));
 	}
 	
 	void setPassword(int i,String pass) {
 		List<WebElement> elements = new ArrayList<WebElement>();
-		elements = Actions.driver.findElements(By.cssSelector(signUpPasswordTextFieldLocator));
+		elements = actions.driver.findElements(By.cssSelector(signUpPasswordTextFieldLocator));
 		elements.get(i).sendKeys(pass);
 		assertTrue(elements.get(i).getAttribute("value").toString().contains(pass));
 	}
@@ -112,7 +116,7 @@ public class SheinPageObject {
 	
 	boolean register(int i) {
 		List<WebElement> elements = new ArrayList<WebElement>();
-		elements = Actions.driver.findElements(By.cssSelector(registerBtnLocator));
+		elements = actions.driver.findElements(By.cssSelector(registerBtnLocator));
 		elements.get(i).click();
 		if(actions.waitUntil(By.cssSelector(registerBtnLocator), presenceOfElement)==null) {
 			return true;
@@ -122,7 +126,7 @@ public class SheinPageObject {
 	
 	boolean login(int i) {
 		List<WebElement> elements = new ArrayList<WebElement>();
-		elements = Actions.driver.findElements(By.cssSelector(loginBtnLocator));
+		elements = actions.driver.findElements(By.cssSelector(loginBtnLocator));
 		elements.get(i).click();
 		if(actions.waitUntil(By.cssSelector(loginBtnLocator), presenceOfElement)==null) {
 			if(actions.waitUntil(By.cssSelector(accountSettingsLocator), presenceOfElement)!=null) {
@@ -138,7 +142,7 @@ public class SheinPageObject {
 	}
 	
 	void verifyEditabilityOfEmail(String email) {
-		WebElement ele = Actions.driver.findElement(By.cssSelector(accSettingsEmailLocator));
+		WebElement ele = actions.driver.findElement(By.cssSelector(accSettingsEmailLocator));
 		try {
 			ele.sendKeys("");
 			Assert.fail("The Email must be non-Editable");
@@ -151,7 +155,7 @@ public class SheinPageObject {
 	
 	void editPhone(int i, String p) {
 		List<WebElement> elements = new ArrayList<WebElement>();
-		elements = Actions.driver.findElements(By.cssSelector(accSettingsPhoneLocator));
+		elements = actions.driver.findElements(By.cssSelector(accSettingsPhoneLocator));
 		elements.get(i).sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
 		elements.get(i).sendKeys(p);
 		assertTrue(elements.get(i).getAttribute("value").toString().contains(p));
@@ -159,13 +163,13 @@ public class SheinPageObject {
 	}
 	
 	void editDate(String day,String month,String year) {
-		Actions.driver.findElement(By.cssSelector(accSettingsDayLocator)).sendKeys(day);
-		Actions.driver.findElement(By.cssSelector(accSettingsMonthLocator)).sendKeys(month);
-		Actions.driver.findElement(By.cssSelector(accSettingsYearLocator)).sendKeys(year);
+		actions.driver.findElement(By.cssSelector(accSettingsDayLocator)).sendKeys(day);
+		actions.driver.findElement(By.cssSelector(accSettingsMonthLocator)).sendKeys(month);
+		actions.driver.findElement(By.cssSelector(accSettingsYearLocator)).sendKeys(year);
 	}
 	
 	void editCountry(String country) {
-		Actions.driver.findElement(By.cssSelector(accSettingsCountryLocator)).sendKeys(country);
+		actions.driver.findElement(By.cssSelector(accSettingsCountryLocator)).sendKeys(country);
 	}
 	
 	void updateDate() {

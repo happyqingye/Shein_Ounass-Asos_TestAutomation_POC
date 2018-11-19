@@ -11,7 +11,12 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 public class SheinGoods {
-	Actions actions = new Actions();
+	public Actions actions ;
+	
+	public SheinGoods(Actions actions){
+		this.actions = actions;
+	}
+	
 	String addToBagBtnLocator = "body > div.c-outermost-ctn > div.mgds-goodsd.j-mgds-goodsd.container-fluid-1200.j-detail-page > div.row.c-goodsdc > div.goodsd-right.j-goodsd-right-ctn.col-sm-5 > div.j-vue-dt-addbag-opt > div.goodsd-btn > button.she-btn-black.she-btn-xl",
 			coockiesAcceptBtnLocator = ".accept-btn",
 			presenceOfElement = "presenceOfElement" ,
@@ -20,7 +25,6 @@ public class SheinGoods {
 			bagIcon = "a[href='https://www.shein.com/cart']>i[class*='iconfont']",
 			elementToBeClickable = "elementToBeClickable";
 				
-	
 	public void navigateToItem(String URL) {
 		actions.navigateToPage(URL, By.cssSelector(addToBagBtnLocator));
 		
@@ -30,7 +34,7 @@ public class SheinGoods {
 	}
 	
 	void handleCookies() {
-		if(Actions.driver.findElement(By.cssSelector(coockiesAcceptBtnLocator)).isDisplayed() ) {
+		if(actions.driver.findElement(By.cssSelector(coockiesAcceptBtnLocator)).isDisplayed() ) {
 			actions.clickOn(By.cssSelector(coockiesAcceptBtnLocator));
 		}
 	}
@@ -43,7 +47,7 @@ public class SheinGoods {
 	public void verifyBag(String [] goods) {
 		actions.clickOn(By.cssSelector(bagIcon));
 		Arrays.sort(goods);
-		List<WebElement> items = Actions.driver.findElements(By.cssSelector(bagItems));
+		List<WebElement> items = actions.driver.findElements(By.cssSelector(bagItems));
 		assertEquals(items.size(), goods.length,"Assert Number of Items in the Bag");
 		List <String> actualItems = new ArrayList<String>();
 		for(int i=0;i<items.size();i++) {

@@ -13,7 +13,7 @@ import POM.Actions;
 import POM.SheinGoods;
 import POM.SheinPageObject;
 
-public class Shein {
+public class Shein2 {
 	public Actions actions = new Actions();
 	private static Properties properties = new Properties();
 	SheinPageObject shein;
