@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Shein" thread-count="10" parallel="classes">
+<suite guice-stage="DEVELOPMENT" name="Shein" thread-count="10" parallel="tests">
   <test thread-count="5" verbose="2" name="Shein">
+      <parameter name="browser" value="chrome"/>
     <classes>
       <class name="TestAutomationTasks.Shein"/>
+    </classes>
+  </test> <!-- Default test -->
+
+<test thread-count="5" verbose="2" name="Shein2">
+      <parameter name="browser" value="chrome"/>
+    <classes>
       <class name="TestAutomationTasks.Shein2"/>
     </classes>
   </test> <!-- Default test -->
+
 </suite> <!-- Default suite -->

@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.Properties;
 
+import java.net.MalformedURLException;
 import org.testng.annotations.*;
 
 import POM.Actions;
@@ -20,10 +21,10 @@ public class Shein2 {
 	SheinGoods sheinGoods ;
 
 	@BeforeClass
-	public void setUp() throws Exception {
-		
+	@Parameters({"browser"})
+	public void setUp(String browser) throws Exception,MalformedURLException {
 		properties.load(new FileReader(new File("test.properties")));
-		actions.initiateTheWebDriver();
+		actions.initiateTheWebDriver(browser);
 		shein = new SheinPageObject(actions);
 		sheinGoods =new SheinGoods(actions);
 	}
@@ -33,7 +34,7 @@ public class Shein2 {
 		actions.closeTheBrowser();
 	}
 
-	//@Test(priority=3)
+	@Test(priority=3)
 	public void sheinHappyScenario() throws InterruptedException {
 		shein.navigateToHomePage(properties.getProperty("sheinWebsite"));
 		if (properties.getProperty("newClient") == "true") {
@@ -65,18 +66,5 @@ public class Shein2 {
 
 	}
 
-	@Test(priority=1)
-	public void invalidSignUp() {
-		shein.navigateToHomePage(properties.getProperty("sheinWebsite"));
-		assertFalse(shein.createAccount(properties.getProperty("email"), properties.getProperty("wrongPass")),
-				"SignUp Error");
-
-	}
-
-	@Test(priority=2)
-	public void invalidSignIn() {
-		shein.navigateToHomePage(properties.getProperty("sheinWebsite"));
-		assertFalse(shein.signIn(properties.getProperty("email"), properties.getProperty("wrongPass")), "SignIn Error");
-
-	}
+	
 }
