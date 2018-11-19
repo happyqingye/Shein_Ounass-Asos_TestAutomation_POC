@@ -5,16 +5,21 @@ import static org.testng.Assert.assertNotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -24,16 +29,21 @@ import io.github.bonigarcia.wdm.ChromeDriverManager;
 public class Actions {
 
 	public static ArrayList<WebDriver> allDrivers;
-	public static WebDriver driver;
+	public static RemoteWebDriver driver;
 	
 	public void initiateMultipleWebDrivers(int numbers,String [] paths) {
 		
 	}
 	
-	public void initiateTheWebDriver() {
+	public void initiateTheWebDriver() throws MalformedURLException {
 		//System.setProperty("webdriver.chrome.driver", chromeDriverPath);
-		ChromeDriverManager.getInstance().setup();
-		Actions.driver = new ChromeDriver();
+		//ChromeDriverManager.getInstance().setup();
+		//Actions.driver = new ChromeDriver();
+		DesiredCapabilities cap = DesiredCapabilities.chrome();
+		cap.setPlatform(Platform.LINUX);
+		cap.setVersion("");
+		Actions.driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),cap);
+		
 		Actions.driver.manage().window().maximize();
 		Actions.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
@@ -110,7 +120,7 @@ public class Actions {
 
 	public void closeTheBrowser() {
 		try {
-			Actions.driver.close();
+			Actions.driver.quit();
 		} catch (Exception e) {
 			Assert.fail("Couldn't close the browser because of " + e.getMessage());
 		}
