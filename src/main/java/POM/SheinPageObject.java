@@ -54,7 +54,7 @@ public class SheinPageObject {
 		setConfirmPassword(signUp_Index, pass);
 		if(register(0))return true;
 		else {
-			actions.takeScreenShot("SignUp Error");
+			actions.takeScreenShot("SignUp Error"+String.valueOf ((int)(Math.random() * 50 + 1)));
 			return false;
 		}
 	}
@@ -65,7 +65,7 @@ public class SheinPageObject {
 		setPassword(login_index,pass);
 		login(login_index);
 		if(actions.waitUntil(By.cssSelector(accountSettingsLocator), presenceOfElement)==null) {
-			actions.takeScreenShot("SignIn Error");
+			actions.takeScreenShot("SignIn Error"+String.valueOf((int)(Math.random() * 50 + 1)));
 			return false ;
 		}
 		return true;

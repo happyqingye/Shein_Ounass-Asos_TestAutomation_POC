@@ -24,16 +24,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import bsh.classpath.BshClassPath.DirClassSource;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 
 public class Actions {
 
+	
 	public static ArrayList<WebDriver> allDrivers;
 	public WebDriver driver;
 	
-	public void initiateMultipleWebDrivers(int numbers,String [] paths) {
-		
-	}
 	
 	public void initiateTheWebDriver() throws MalformedURLException {
 		//System.setProperty("webdriver.chrome.driver", chromeDriverPath);
@@ -50,8 +49,16 @@ public class Actions {
 
 	public void takeScreenShot(String name) {
 		File src= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		String os = System.getProperty("os.name");
+		String directoryName ="";
+		if(os.toLowerCase().contains("windows")) {
+			directoryName="ScreenShots\\";
+		}
+		else {
+			directoryName="ScreenShots/" ;
+		}
 		try {
-		  FileUtils.copyFile(src, new File("ScreenShots\\"+name+".png"));
+		  FileUtils.copyFile(src, new File(directoryName+name+".png"));
 		}
 		catch (IOException e)
 		 {
@@ -123,6 +130,14 @@ public class Actions {
 			driver.quit();
 		} catch (Exception e) {
 			Assert.fail("Couldn't close the browser because of " + e.getMessage());
+		}
+	}
+	
+	public void erasePastTestData() {
+		File screenShot = new File("ScreenShots");
+		File[] listFiles = screenShot.listFiles();
+		for (File file : listFiles) {
+			file.delete();
 		}
 	}
 }

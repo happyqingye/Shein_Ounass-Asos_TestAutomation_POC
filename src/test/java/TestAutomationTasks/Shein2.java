@@ -21,15 +21,7 @@ public class Shein2 {
 
 	@BeforeClass
 	public void setUp() throws Exception {
-		try {
-			File screenShote = new File("ScreenShots");
-			File[] listFiles = screenShote.listFiles();
-			for (File file : listFiles) {
-				file.delete();
-			}
-		} catch (Exception e) {
-
-		}
+		
 		properties.load(new FileReader(new File("test.properties")));
 		actions.initiateTheWebDriver();
 		shein = new SheinPageObject(actions);
@@ -81,7 +73,7 @@ public class Shein2 {
 
 	}
 
-	//@Test(priority=2)
+	@Test(priority=2)
 	public void invalidSignIn() {
 		shein.navigateToHomePage(properties.getProperty("sheinWebsite"));
 		assertFalse(shein.signIn(properties.getProperty("email"), properties.getProperty("wrongPass")), "SignIn Error");
