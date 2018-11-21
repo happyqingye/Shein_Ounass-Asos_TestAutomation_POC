@@ -32,7 +32,7 @@ public class Asos {
 		actions.closeTheBrowser();
 	}
 	
-	//@Test
+	@Test
 	public void VerifyProductsPageLoadMoreBtn() {
 		actions.driver.get(properties.getProperty("AsosWebsite"));
 		assertEquals(asos.getShowProductsCount(), 72);
@@ -43,6 +43,6 @@ public class Asos {
 	@Test
 	public void VerifyAnonFilter() {
 		actions.driver.get(properties.getProperty("AsosWebsite"));
-		asos.filterByAnon(5);
+		asos.filterByAnon(Integer.parseInt(properties.getProperty("ExpectedNoOfResults")));
 	}
 	}

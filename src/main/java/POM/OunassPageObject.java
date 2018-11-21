@@ -81,30 +81,43 @@ public class OunassPageObject {
 
 		actions.driver.switchTo().defaultContent();
 		actions.driver.switchTo().frame(0);
+		ArrayList l =new ArrayList();
 		actions.clickOn(By.cssSelector(facebookBtn));
+		for(int i=0;i<10;i++){
+			l = new ArrayList(actions.driver.getWindowHandles());
+			if(l.size()<2){
+				try{
+					Thread.sleep(500);
+					actions.clickOn(By.cssSelector(facebookBtn));
+				}
+				catch(Exception e){}
+			}
+			else{break;}
+		}
 		actions.driver.switchTo().defaultContent();
+
 		try {
 			Thread.sleep(3000);
-			ArrayList l = new ArrayList(actions.driver.getWindowHandles());
-			actions.driver.switchTo().window(l.get(1).toString());
-			actions.setText(By.cssSelector(facebookEmail),username);
-			actions.setText(By.cssSelector(facebookPass),pass);
-			actions.clickOn(By.cssSelector(facebookLoginBtn));
-			if(actions.waitUntil(By.cssSelector(facebookConfirmBtn), "presenceOfElement") !=null){
-				actions.clickOn(By.cssSelector(facebookConfirmBtn));
+			if(l.size() >=2){
+				actions.driver.switchTo().window(l.get(1).toString());
+				actions.setText(By.cssSelector(facebookEmail),username);
+				actions.setText(By.cssSelector(facebookPass),pass);
+				actions.clickOn(By.cssSelector(facebookLoginBtn));
+				if(actions.waitUntil(By.cssSelector(facebookConfirmBtn), "presenceOfElement") !=null){
+					actions.clickOn(By.cssSelector(facebookConfirmBtn));
+				}
+				actions.driver.switchTo().window(l.get(0).toString());
+				actions.driver.switchTo().defaultContent();
+				actions.driver.switchTo().frame(0);
+				if(actions.waitUntil(By.cssSelector(facebookError), "presenceOfElement")!=null) {
+					Assert.fail("This Account can't be connected to Amber via Facebook please contact the support");
+				}
 			}
-			actions.driver.switchTo().window(l.get(0).toString());
-			actions.driver.switchTo().defaultContent();
-			actions.driver.switchTo().frame(0);
-			if(actions.waitUntil(By.cssSelector(facebookError), "presenceOfElement")!=null) {
-				Assert.fail("This Account can't be connected to Amber via Facebook please contact the support");
-			}
+			else{Assert.fail("Couldn't Open Facebook Window");}
 			
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		//actions.driver.switchTo().window(tabs.get(1).toString());
 	}
 	
 	public void verifyLogin() {

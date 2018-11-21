@@ -53,7 +53,7 @@ public class SheinGoods {
 			actualItems.add(items.get(i).getAttribute("href"));
 		}
 		
-		for(int i=0;i<items.size();i++) {
+		for(int i=0;i<goods.length;i++) {
 			if(!actualItems.contains(goods[i])) {
 				Assert.fail("Actual Items doesn't contain "+ goods[i]);
 			}
