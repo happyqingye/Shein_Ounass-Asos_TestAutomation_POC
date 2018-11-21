@@ -24,6 +24,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+
+import java.io.File;
+import java.io.FileReader;
+
+import java.util.Properties;
+import java.io.IOException;
 import bsh.classpath.BshClassPath.DirClassSource;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 
@@ -31,27 +37,36 @@ public class Actions {
 
 	
 	public static ArrayList<WebDriver> allDrivers;
-	//public RemoteWebDriver driver;
-	public WebDriver driver ;
+	public RemoteWebDriver driver;
 	
-	public void initiateTheWebDriver(String browser) throws MalformedURLException {
-		ChromeDriverManager.getInstance().setup();
-		driver = new ChromeDriver();
-//		DesiredCapabilities cap=new DesiredCapabilities();
-//		 
-//		if(browser.contains("chrome")){
-//		 cap = DesiredCapabilities.chrome();
-//		}
-//		else if(browser.contains("firefox")){
-//		 cap = DesiredCapabilities.firefox();
-//		}
-//		else{
-//			Assert.fail("Wrong Browser");
-//		}
-//		cap.setPlatform(Platform.LINUX);
-//		cap.setVersion("");
-//		driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),cap);
-//		
+	private static Properties properties = new Properties();
+
+	public void initiateTheWebDriver(String browser) throws Exception,MalformedURLException {
+		properties.load(new FileReader(new File("test.properties")));
+		String useSeleniumGrid = properties.getProperty("useSeleniumGrid");
+		if(useSeleniumGrid.contains("false")){
+			ChromeDriverManager.getInstance().setup();
+			driver = new ChromeDriver();
+		}
+		else if(useSeleniumGrid.contains("true")){
+			DesiredCapabilities cap=new DesiredCapabilities();
+			
+			if(browser.contains("chrome")){
+			cap = DesiredCapabilities.chrome();
+			}
+			else if(browser.contains("firefox")){
+			cap = DesiredCapabilities.firefox();
+			}
+			else{
+				Assert.fail("Wrong Browser");
+			}
+			cap.setPlatform(Platform.LINUX);
+			cap.setVersion("");
+			driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),cap);
+		}
+	    else{
+			Assert.fail("Wrong choice of use Selenium Grid Flag "+useSeleniumGrid);
+		}	
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}

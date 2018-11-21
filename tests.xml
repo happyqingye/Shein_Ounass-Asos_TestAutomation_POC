@@ -15,6 +15,12 @@
     </classes>
   </test> <!-- Default test -->
 
+<test thread-count="10" verbose="2" name="Asos">
+    <parameter name="browser" value="chrome"/>
+    <classes>
+        <class name="TestAutomationTasks.Asos"/>
+    </classes>
+</test> <!-- Default test -->
 <test thread-count="10" verbose="2" name="Ounass">
       <parameter name="browser" value="chrome"/>
     <classes>
@@ -22,11 +28,6 @@
     </classes>
   </test> <!-- Default test -->
 
-<test thread-count="10" verbose="2" name="Asos">
-      <parameter name="browser" value="chrome"/>
-    <classes>
-      <class name="TestAutomationTasks.Asos"/>
-    </classes>
-  </test> <!-- Default test -->
+
 
 </suite> <!-- Default suite -->

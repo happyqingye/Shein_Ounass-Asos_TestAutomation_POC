@@ -64,6 +64,6 @@ public class AsosPageObject {
 		}
 		assertEquals(actions.driver.findElement(By.cssSelector(filteredValueLabel)).getAttribute("innerHTML"), "Anon");
 		assertEquals(actions.driver.findElement(By.cssSelector(filteredLabel)).getAttribute("innerHTML"),"1 selected");
-		assertEquals(getResults(),results);
+		assertEquals(getResults(),results,"Number of Products is wrong");
 	}
 }
