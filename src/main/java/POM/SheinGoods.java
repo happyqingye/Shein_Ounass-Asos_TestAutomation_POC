@@ -48,7 +48,6 @@ public class SheinGoods {
 		actions.clickOn(By.cssSelector(bagIcon));
 		Arrays.sort(goods);
 		List<WebElement> items = actions.driver.findElements(By.cssSelector(bagItems));
-		assertEquals(items.size(), goods.length,"Assert Number of Items in the Bag");
 		List <String> actualItems = new ArrayList<String>();
 		for(int i=0;i<items.size();i++) {
 			actualItems.add(items.get(i).getAttribute("href"));
@@ -59,5 +58,7 @@ public class SheinGoods {
 				Assert.fail("Actual Items doesn't contain "+ goods[i]);
 			}
 		}
+		assertEquals(items.size(), goods.length,"Assert Number of Items in the Bag");
+		
 	}
 }

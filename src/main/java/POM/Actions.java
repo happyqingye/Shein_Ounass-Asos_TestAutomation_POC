@@ -31,28 +31,27 @@ public class Actions {
 
 	
 	public static ArrayList<WebDriver> allDrivers;
-	public RemoteWebDriver driver;
-	
+	//public RemoteWebDriver driver;
+	public WebDriver driver ;
 	
 	public void initiateTheWebDriver(String browser) throws MalformedURLException {
-		//System.setProperty("webdriver.chrome.driver", chromeDriverPath);
-		//ChromeDriverManager.getInstance().setup();
-		//driver = new ChromeDriver();
-		DesiredCapabilities cap=new DesiredCapabilities();
-		 
-		if(browser.contains("chrome")){
-		 cap = DesiredCapabilities.chrome();
-		}
-		else if(browser.contains("firefox")){
-		 cap = DesiredCapabilities.firefox();
-		}
-		else{
-			Assert.fail("Wrong Browser");
-		}
-		cap.setPlatform(Platform.LINUX);
-		cap.setVersion("");
-		driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),cap);
-		
+		ChromeDriverManager.getInstance().setup();
+		driver = new ChromeDriver();
+//		DesiredCapabilities cap=new DesiredCapabilities();
+//		 
+//		if(browser.contains("chrome")){
+//		 cap = DesiredCapabilities.chrome();
+//		}
+//		else if(browser.contains("firefox")){
+//		 cap = DesiredCapabilities.firefox();
+//		}
+//		else{
+//			Assert.fail("Wrong Browser");
+//		}
+//		cap.setPlatform(Platform.LINUX);
+//		cap.setVersion("");
+//		driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),cap);
+//		
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
