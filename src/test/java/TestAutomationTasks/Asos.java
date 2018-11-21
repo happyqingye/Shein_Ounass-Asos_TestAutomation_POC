@@ -20,10 +20,10 @@ public class Asos {
 	AsosPageObject asos;
 	private static Properties properties = new Properties();
 	@BeforeClass
-	//@Parameters({"browser"})
-	public void setUp() throws Exception,MalformedURLException {
+	@Parameters({"browser"})
+	public void setUp(String browser) throws Exception,MalformedURLException {
 		properties.load(new FileReader(new File("test.properties")));
-		actions.initiateTheWebDriver("");
+		actions.initiateTheWebDriver(browser);
 		asos = new AsosPageObject(actions);
 	}
 
