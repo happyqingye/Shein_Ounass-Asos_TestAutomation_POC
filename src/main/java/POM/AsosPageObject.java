@@ -9,9 +9,9 @@ public class AsosPageObject {
 	String resultsLabel = "p[data-auto-id='styleCount']",
 			loadmoreBtn= "a[data-auto-id='loadMoreProducts']",
 			brandDropDown = "li[data-dropdown-id='brand']",
-			anonBrand = "#brand_15660",
-			filteredLabel = "p[data-auto-id='totalSelectedFacetValues']",
-			filteredValueLabel = "p[data-auto-id='selectedFacetValueList']",
+			anonBrand = "label[for='brand_15660']",
+			filteredLabel = "#plp > div > div > div:nth-child(1) > div > div > div > div.St7n08U > ul > li:nth-child(4) > div > div > div > header > div > p._3wPu-0a",
+			filteredValueLabel = "#plp > div > div > div:nth-child(1) > div > div > div > div.St7n08U > ul > li:nth-child(4) > div > div > div > header > div > p._1vMrQym",
 			showingLabel = "p[data-auto-id='productsProgressBar']";
 	int results=0,showProducts=0;
 	public AsosPageObject(Actions actions) {
@@ -56,6 +56,12 @@ public class AsosPageObject {
 	public void filterByAnon(int results) {
 		actions.clickOn(By.cssSelector(brandDropDown));
 		actions.clickOn(By.cssSelector(anonBrand));
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertEquals(actions.driver.findElement(By.cssSelector(filteredValueLabel)).getAttribute("innerHTML"), "Anon");
 		assertEquals(actions.driver.findElement(By.cssSelector(filteredLabel)).getAttribute("innerHTML"),"1 selected");
 		assertEquals(getResults(),results);
